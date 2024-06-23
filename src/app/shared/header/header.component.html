@@ -1,0 +1,60 @@
+<mat-toolbar background="primary" fxFlex fxLayoutAlign="center center">
+    <div fxFlex="90%" fxLayoutAlign="space-between center">
+
+        <span class="logo">
+            Hr App
+        </span>
+
+        <ul fxLayout fxLayoutGap="30px" *ngIf="activeUser" fxHide.lt-md>
+            <li>
+                <a>Employee List</a>
+            </li>
+
+            <li *ngIf="activeUser?.Position === 'HR Manager'">
+                <a>Approval Requests</a>
+            </li>
+
+            <li>
+                <a>Leave Request</a>
+            </li>
+
+            <li>
+                <a>Projects</a>
+            </li>
+
+            <li>
+                <a (click)="logout()">Logout</a>
+            </li>
+        </ul>
+
+        <button mat-icon-button [matMenuTriggerFor]="menu" fxHide.gt-sm *ngIf="activeUser">
+            <mat-icon>
+                menu
+            </mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <a>Employee List</a>
+                <mat-icon>groups</mat-icon>
+            </button>
+            <button mat-menu-item *ngIf="activeUser?.Position === 'HR Manager'">
+                <a>Approval Requests</a>
+                <mat-icon>check_box</mat-icon>
+            </button>
+            <button mat-menu-item>
+                <a>Leave Request</a>
+                <mat-icon>waving_hand</mat-icon>
+            </button>
+            <button mat-menu-item>
+                <a>Projects</a>
+                <mat-icon>diversity_3</mat-icon>
+            </button>
+            <button mat-menu-item>
+                <a (click)="logout()">logout</a>
+                <mat-icon>logout</mat-icon>
+            </button>
+        </mat-menu>
+
+    </div>
+</mat-toolbar>
