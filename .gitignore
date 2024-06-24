@@ -1,1 +1,22 @@
 node_modules
+# Ignore node_modules
+node_modules/
+
+# Ignore Angular build artifacts and temporary files
+dist/
+.angular/
+.angular-cache/
+*.log
+
+# Ignore environment files
+.env
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore system files
+.DS_Store
+
+# Ignore public folder
+public/
