@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -21,7 +22,7 @@ export class AuthComponent {
 
   subdivisionArray = ['HR', 'IT', 'Marketing', 'Sales']
   employeesData: User[] = []
-  chosenEmployeeName?: string = ''
+  chosenEmployeeName?: string | null = ''
 
   subdivision = ''
   idBySubdivision: number[] = []
@@ -30,7 +31,8 @@ export class AuthComponent {
 
   constructor(
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(){
@@ -60,25 +62,26 @@ export class AuthComponent {
 
   enableSelectId(): void {
     this.authForm.get('subdivision')?.valueChanges.subscribe((subdivisionData: string) => {
-      this.subdivision = subdivisionData
-      if (subdivisionData) {
+        this.chosenEmployeeName = null
         this.authForm.get('id')?.enable()
+        this.authForm.get('id')?.setValue(null)
         this.authService.getEmployeeBySubdivision(subdivisionData).subscribe((data: User[]) => {
           this.idBySubdivision = data.map((user: User) => user.ID)
           this.chosenEmployeeName = ''
         })
-      } 
     })
   }
 
   enableSelectFullName(): void {
     this.authForm.get('id')?.valueChanges.subscribe((id: number) => {
-      this.authService.getAllEmployees()
-      .pipe(take(1))
-      .subscribe((data: User[]) => {
-        const employee = data.find((user: User) => user.ID === id)
-        this.chosenEmployeeName = employee?.Full_Name
-      })
+      if (id !== null) {
+        this.authService.getAllEmployees()
+          .pipe(take(1))
+          .subscribe((data: User[]) => {
+            const employee = data.find((user: User) => user.ID === id)
+            if (employee) this.chosenEmployeeName = employee.Full_Name;
+          })
+      } else this.chosenEmployeeName = null
     })
   }
 
@@ -86,6 +89,9 @@ export class AuthComponent {
     this.authService.getEmployeeById(this.authForm.get('id')?.value).subscribe((user: User) => {
       this.authService.currentUser.next(user)
       localStorage.setItem('user_data', JSON.stringify(user))
+      if (user.Position === 'HR Manager') {
+        this.router.navigate(['/employee-list'])
+      } else this.router.navigate(['/projects'])
     })
   }
 
