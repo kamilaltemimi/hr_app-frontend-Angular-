@@ -1,0 +1,32 @@
+<div fxFlex fxLayoutAlign="center">
+    <div fxFlex="350px" fxLayout fxLayoutAlign="center">
+        <form [formGroup]="authForm" (ngSubmit)="submitForm()" fxFlex.xs="300px">
+            <div fxLayoutGap="10px">
+                <mat-form-field>
+                    <mat-label>Subdivision</mat-label>
+                    <mat-select formControlName="subdivision">
+                        <mat-option [value]="option" *ngFor="let option of subdivisionArray">
+                            {{option}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex="80px">
+                    <mat-label>ID</mat-label>
+                    <mat-select formControlName="id">
+                        <mat-option [value]="id" *ngFor="let id of idBySubdivision">
+                            {{id}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayoutGap="10px" fxLayoutAlign="center start">
+                <mat-form-field>
+                    <mat-label>Full Name</mat-label>
+                    <input matInput readonly [value]="chosenEmployeeName">
+                </mat-form-field>
+
+                <button [disabled]="authForm.invalid" class="loginButton" type="submit" mat-fab extended>Login</button>
+            </div>
+        </form>
+    </div>    
+</div>
