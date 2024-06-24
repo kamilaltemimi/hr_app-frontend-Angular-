@@ -1,0 +1,39 @@
+<form [formGroup]="editUserForm">
+    <mat-form-field>
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="fullname">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Subdivision</mat-label>
+        <mat-select formControlName="subdivision">
+            <mat-option [value]="subdivision" *ngFor="let subdivision of subdivisions">
+                {{subdivision}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Position</mat-label>
+        <mat-select formControlName="position">
+            <mat-option [value]="position" *ngFor="let position of positions">
+                {{position}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Partner</mat-label>
+        <mat-select formControlName="partner">
+            <mat-option>
+                
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>OOF</mat-label>
+        <input matInput formControlName="oof">
+    </mat-form-field>
+
+</form>
