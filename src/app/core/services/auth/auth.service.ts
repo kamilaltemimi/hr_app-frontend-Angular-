@@ -25,4 +25,5 @@ export class AuthService {
   getEmployeeById(id: string): Observable<User> {
     return this.http.get<User>(`${this.URL}/${id}`)
   }
+
 }

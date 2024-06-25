@@ -4,7 +4,7 @@ export interface User {
     Subdivision: string,
     Position: string,
     Status: string,
-    Prople_Partner: number,
-    Out_Of_Office_Balance: number,
+    People_Partner: number,
+    Out_of_Office_Balance: number,
     Photo?: File
 }

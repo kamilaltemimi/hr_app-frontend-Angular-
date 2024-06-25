@@ -7,6 +7,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateEmployeeDialogComponent } from './update-employee.dialog/update-employee.dialog.component';
+import { DialogRef } from '@angular/cdk/dialog';
+import { DeadcivateEmployeeDialogComponent } from './deadcivate-employee.dialog/deadcivate-employee.dialog.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -23,7 +25,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private employeeService: EmployeeService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -44,13 +46,27 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   }
 
   updateEmployee(user: User): void {
-    this.dialog.open(UpdateEmployeeDialogComponent, {
+    const dialogRef = this.dialog.open(UpdateEmployeeDialogComponent, {
       data: user
+    })
+
+    dialogRef.afterClosed().subscribe((result: User) => {
+      if (result) {
+        const userIndex = this.dataSource.data.findIndex((user: User) => user.ID === result.ID)
+        this.dataSource.data[userIndex] = result
+        this.dataSource._updateChangeSubscription()
+      }
     })
   }
 
   deactivateEmployee(user: User): void {
+    const dialogRef = this.dialog.open(DeadcivateEmployeeDialogComponent, {
+      data: user
+    })
 
+    dialogRef.afterClosed().subscribe((result: User) => {
+      this.employeeService.getAllEmployees().subscribe((data: User[]) => this.dataSource.data = data)
+    })
   }
 
 }

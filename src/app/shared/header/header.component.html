@@ -1,12 +1,12 @@
 <mat-toolbar background="primary" fxFlex fxLayoutAlign="center center">
-    <div fxFlex="90%" fxLayoutAlign="space-between center">
+    <div fxFlex="95%" fxLayoutAlign="space-between center">
 
         <span class="logo">
             Hr App
         </span>
 
         <ul fxLayout fxLayoutGap="30px" *ngIf="activeUser" fxHide.lt-md>
-            <li>
+            <li *ngIf="activeUser?.Position === 'HR Manager'">
                 <a>Employee List</a>
             </li>
 

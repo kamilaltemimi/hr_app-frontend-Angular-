@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,8 @@ export class HeaderComponent implements OnInit {
   activeUser: User | null = null
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,7 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.authService.currentUser.next(null)
     localStorage.removeItem('user_data')
+    this.router.navigate(['/auth'])
   }
 
 }

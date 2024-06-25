@@ -5,16 +5,16 @@ import { User } from '../../../core/models/user';
 import { take } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SharedModule } from '../../../shared/shared.module';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, FlexLayoutModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, SharedModule, FlexLayoutModule, FormsModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
@@ -64,7 +64,7 @@ export class AuthComponent {
     this.authForm.get('subdivision')?.valueChanges.subscribe((subdivisionData: string) => {
         this.chosenEmployeeName = null
         this.authForm.get('id')?.enable()
-        this.authForm.get('id')?.setValue(null)
+        this.authForm.get('id')?.patchValue(null)
         this.authService.getEmployeeBySubdivision(subdivisionData).subscribe((data: User[]) => {
           this.idBySubdivision = data.map((user: User) => user.ID)
           this.chosenEmployeeName = ''
