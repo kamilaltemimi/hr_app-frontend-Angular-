@@ -37,4 +37,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/auth'])
   }
 
+  navigate(route: string): void {
+    this.router.navigate([route])
+  }
+
 }

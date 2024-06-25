@@ -9,16 +9,16 @@ import { CommonModule } from '@angular/common';
   selector: 'app-deadcivate-employee.dialog',
   standalone: true,
   imports: [SharedModule, CommonModule],
-  templateUrl: './deadcivate-employee.dialog.component.html',
-  styleUrl: './deadcivate-employee.dialog.component.scss'
+  templateUrl: './change-status-employee.dialog.component.html',
+  styleUrl: './change-status-employee.dialog.component.scss'
 })
-export class DeadcivateEmployeeDialogComponent implements OnInit {
+export class ChangeStatusEmployeeDialogComponent implements OnInit {
 
   selectedUser!: User
 
   constructor(
     @Inject (MAT_DIALOG_DATA) public userData: User,
-    private readonly _dialog: MatDialogRef<DeadcivateEmployeeDialogComponent>,
+    private readonly _dialog: MatDialogRef<ChangeStatusEmployeeDialogComponent>,
     private employeeService: EmployeeService
   ) {}
 

@@ -7,19 +7,19 @@
 
         <ul fxLayout fxLayoutGap="30px" *ngIf="activeUser" fxHide.lt-md>
             <li *ngIf="activeUser?.Position === 'HR Manager'">
-                <a>Employee List</a>
+                <a (click)="navigate('employee-list')">Employee List</a>
             </li>
 
             <li *ngIf="activeUser?.Position === 'HR Manager'">
-                <a>Approval Requests</a>
+                <a (click)="navigate('approval-request')">Approval Requests</a>
             </li>
 
             <li>
-                <a>Leave Request</a>
+                <a (click)="navigate('leave-request')">Leave Requests</a>
             </li>
 
             <li>
-                <a>Projects</a>
+                <a (click)="navigate('projects')">Projects</a>
             </li>
 
             <li>
@@ -35,19 +35,19 @@
 
         <mat-menu #menu="matMenu">
             <button mat-menu-item>
-                <a>Employee List</a>
+                <a (click)="navigate('employee-list')">Employee List</a>
                 <mat-icon>groups</mat-icon>
             </button>
             <button mat-menu-item *ngIf="activeUser?.Position === 'HR Manager'">
-                <a>Approval Requests</a>
+                <a (click)="navigate('approval-request')">Approval Requests</a>
                 <mat-icon>check_box</mat-icon>
             </button>
             <button mat-menu-item>
-                <a>Leave Request</a>
+                <a (click)="navigate('leave-request')">Leave Requests</a>
                 <mat-icon>waving_hand</mat-icon>
             </button>
             <button mat-menu-item>
-                <a>Projects</a>
+                <a (click)="navigate('projects')">Projects</a>
                 <mat-icon>diversity_3</mat-icon>
             </button>
             <button mat-menu-item>

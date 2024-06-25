@@ -1,1 +1,50 @@
-<p>leave-request works!</p>
+<div FxFlex fxLayoutAlign="center">
+    <div class="form_container">
+        <div class="form_content_container">
+            <div class="form_title">Leave Request: NEW</div>
+            <form [formGroup]="leaveRequestForm" (ngSubmit)="submitLeaveRequestForm()" fxLayout="column">
+                <div fxLayoutGap="20px">
+                    <mat-form-field>
+                        <mat-label>Full Name</mat-label>
+                        <input matInput readonly formControlName="Full_Name">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Subdivision</mat-label>
+                        <input matInput readonly formControlName="Subdivision">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Position</mat-label>
+                        <input matInput readonly formControlName="Position">
+                    </mat-form-field>
+                </div>
+                <div fxLayoutGap="20px">
+                    <mat-form-field class="date_input">
+                        <mat-label for="date">
+                            Start Date
+                        </mat-label>
+                        <input formControlName="Start_Date" matInput [matDatepicker]="startDatePicker">
+                        <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startDatePicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="date_input">
+                        <mat-label for="date">
+                            End Date
+                        </mat-label>                        
+                        <input formControlName="End_Date" matInput [matDatepicker]="endDatePicker">
+                        <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endDatePicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Absence Reason</mat-label>
+                        <input matInput formControlName="Absence_Reason">
+                    </mat-form-field>
+                </div>
+                <mat-form-field>
+                    <mat-label>Comment</mat-label>
+                    <textarea matInput formControlName="Comment"></textarea>
+                </mat-form-field>
+                <button mat-flat-button type="submit">Submit request</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     MatDialogModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    MatDatepickerModule
   ],
   exports: [
     FlexLayoutModule,
@@ -45,7 +47,8 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     MatDialogModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    MatDatepickerModule
   ]
 })
 export class SharedModule { }

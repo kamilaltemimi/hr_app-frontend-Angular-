@@ -8,7 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateEmployeeDialogComponent } from './update-employee.dialog/update-employee.dialog.component';
 import { DialogRef } from '@angular/cdk/dialog';
-import { DeadcivateEmployeeDialogComponent } from './deadcivate-employee.dialog/deadcivate-employee.dialog.component';
+import { ChangeStatusEmployeeDialogComponent } from './change-status-employee.dialog/change-status-employee.dialog.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -60,7 +60,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   }
 
   deactivateEmployee(user: User): void {
-    const dialogRef = this.dialog.open(DeadcivateEmployeeDialogComponent, {
+    const dialogRef = this.dialog.open(ChangeStatusEmployeeDialogComponent, {
       data: user
     })
 
