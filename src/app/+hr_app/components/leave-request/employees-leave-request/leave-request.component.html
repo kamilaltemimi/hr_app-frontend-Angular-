@@ -1,22 +1,12 @@
-<div FxFlex fxLayoutAlign="center">
+<div FxFlex fxLayout="column" fxLayoutAlign="center center">
     <div class="form_container">
         <div class="form_content_container">
-            <div class="form_title">Leave Request: NEW</div>
-            <form [formGroup]="leaveRequestForm" (ngSubmit)="submitLeaveRequestForm()" fxLayout="column">
-                <div fxLayoutGap="20px">
-                    <mat-form-field>
-                        <mat-label>Full Name</mat-label>
-                        <input matInput readonly formControlName="Full_Name">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Subdivision</mat-label>
-                        <input matInput readonly formControlName="Subdivision">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Position</mat-label>
-                        <input matInput readonly formControlName="Position">
-                    </mat-form-field>
+                <div class="employee_details_container" fxLayoutAlign="space-around" fxLayoutGap="20px" fxLayout>
+                    <div>Full Name: {{currentEmployee.Full_Name}}</div>
+                    <div>Subdivision: {{currentEmployee.Subdivision}}</div>
+                    <div>Position: {{currentEmployee.Position}}</div>
                 </div>
+            <form [formGroup]="leaveRequestForm" (ngSubmit)="submitLeaveRequestForm()" fxLayout="column">
                 <div fxLayoutGap="20px">
                     <mat-form-field class="date_input">
                         <mat-label for="date">
@@ -43,8 +33,8 @@
                     <mat-label>Comment</mat-label>
                     <textarea matInput formControlName="Comment"></textarea>
                 </mat-form-field>
-                <button mat-flat-button type="submit">Submit request</button>
+                <button [disabled]="leaveRequestForm.invalid" mat-flat-button type="submit">Submit request</button>
             </form>
-        </div>
     </div>
+    <p class="submission_confirmation" *ngIf="submissionText">{{submissionText}}</p>
 </div>

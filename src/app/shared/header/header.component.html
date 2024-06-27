@@ -6,16 +6,16 @@
         </span>
 
         <ul fxLayout fxLayoutGap="30px" *ngIf="activeUser" fxHide.lt-md>
-            <li *ngIf="activeUser?.Position === 'HR Manager'">
+            <li *ngIf="activeUser?.Position === 'HR Manager' || activeUser?.Position === 'HR Director'">
                 <a (click)="navigate('employee-list')">Employee List</a>
             </li>
 
-            <li *ngIf="activeUser?.Position === 'HR Manager'">
-                <a (click)="navigate('approval-request')">Approval Requests</a>
+            <li *ngIf="activeUser?.Position !== 'HR Manager' && activeUser?.Position !== 'HR Director'">
+                <a (click)="navigate('leave-request')">Leave Requests</a>
             </li>
 
-            <li>
-                <a (click)="navigate('leave-request')">Leave Requests</a>
+            <li *ngIf="activeUser?.Position === 'HR Manager' || activeUser?.Position === 'HR Director'">
+                <a (click)="navigate('leave-request-list')">Leave Request List</a>
             </li>
 
             <li>
@@ -34,24 +34,24 @@
         </button>
 
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-                <a (click)="navigate('employee-list')">Employee List</a>
+            <button (click)="navigate('employee-list')" mat-menu-item *ngIf="activeUser?.Position === 'HR Manager' || activeUser?.Position === 'HR Director'">
+                <a>Employee List</a>
                 <mat-icon>groups</mat-icon>
             </button>
-            <button mat-menu-item *ngIf="activeUser?.Position === 'HR Manager'">
-                <a (click)="navigate('approval-request')">Approval Requests</a>
-                <mat-icon>check_box</mat-icon>
-            </button>
-            <button mat-menu-item>
-                <a (click)="navigate('leave-request')">Leave Requests</a>
+            <button (click)="navigate('leave-request')" mat-menu-item *ngIf="activeUser?.Position !== 'HR Manager' && activeUser?.Position === 'HR Director'">
+                <a>Leave Requests</a>
                 <mat-icon>waving_hand</mat-icon>
             </button>
-            <button mat-menu-item>
-                <a (click)="navigate('projects')">Projects</a>
+            <button (click)="navigate('leave-request-list')" mat-menu-item *ngIf="activeUser?.Position === 'HR Manager' || activeUser?.Position === 'HR Director'">
+                <a>Leave Request List</a>
+                <mat-icon>format_list_bulleted</mat-icon>
+            </button>
+            <button (click)="navigate('projects')" mat-menu-item>
+                <a>Projects</a>
                 <mat-icon>diversity_3</mat-icon>
             </button>
-            <button mat-menu-item>
-                <a (click)="logout()">logout</a>
+            <button (click)="logout()" mat-menu-item>
+                <a>logout</a>
                 <mat-icon>logout</mat-icon>
             </button>
         </mat-menu>

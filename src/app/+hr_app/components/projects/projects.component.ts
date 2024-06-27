@@ -10,6 +10,7 @@ import { Employee } from '../../../core/models/employee';
 import { ProjectService } from '../../../core/services/project/project.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ProjectsDetailsDialogComponent } from './projects-details.dialog/projects-details.dialog.component';
 
 @Component({
   selector: 'app-projects',
@@ -33,7 +34,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +63,17 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     this.projectService.getProjects().subscribe((projects: Project[]) => this.dataSource.data = projects)
   }
 
-  openProjectDetails(): void {
-    
+  filterProjects(inputValue: Event): void {
+    const searchTerm = (inputValue.target as HTMLInputElement).value
+    this.dataSource.filter = searchTerm
+  }
+
+  openProjectDetails(project: Project): void {
+    const dialogRef = this.dialog.open(ProjectsDetailsDialogComponent, {
+      data: project,
+      width: '600px'
+    })
+
+    dialogRef.afterClosed().subscribe(() => this.getAllProjects())
   }
 }

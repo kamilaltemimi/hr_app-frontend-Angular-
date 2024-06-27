@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../../models/user';
+import { Employee } from '../../models/employee';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +14,27 @@ export class EmployeeService {
     private http: HttpClient
   ) { }
 
-  getAllEmployees(): Observable<User[]> {
-    return this.http.get<User[]>(this.URL)
+  getAllEmployees(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(this.URL)
   }
 
-  updateEmployee(user: User): Observable<User> {
-    return this.http.put<User>(`${this.URL}/${user.ID}`, user)
+  getEmployeesBySubdivision(subdivision: string): Observable<Employee[]> {
+    return this.http.get<Employee[]>(`${this.URL}/subdivision/${subdivision}`)
   }
 
-  deactivateEmployee(user: User): Observable<User> {
-    return this.http.put<User>(`${this.URL}/${user.ID}/deactivate`, user)
+  updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(`${this.URL}/${employee.ID}`, employee)
   }
 
-  activateEmployee(user: User): Observable<User> {
-    return this.http.put<User>(`${this.URL}/${user.ID}/activate`, user)
+  deactivateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(`${this.URL}/${employee.ID}/deactivate`, employee)
+  }
+
+  activateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(`${this.URL}/${employee.ID}/activate`, employee)
+  }
+
+  addEmployee(employee: Employee): Observable<Employee> {
+    return this.http.post<Employee>(this.URL, employee)
   }
 }

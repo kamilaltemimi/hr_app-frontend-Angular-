@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { AuthService } from '../../core/services/auth/auth.service';
-import { User } from '../../core/models/user';
+import { Employee } from '../../core/models/employee';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  activeUser: User | null = null
+  activeUser: Employee | null = null
 
   constructor(
     private authService: AuthService,
@@ -26,8 +26,8 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe((user: User | null) => {
-      this.activeUser = user ? user : null
+    this.authService.currentUser.subscribe((employee: Employee | null) => {
+      this.activeUser = employee ? employee : null
     })
   }
 

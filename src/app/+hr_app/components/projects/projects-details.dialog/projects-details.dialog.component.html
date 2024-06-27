@@ -1,0 +1,53 @@
+<mat-card class="details_container">
+    <mat-card-header>
+        <mat-card-title>Project ID: {{projectDetails.ID}}</mat-card-title>
+        <mat-card-subtitle>Project Type: {{projectDetails.Project_Type}}</mat-card-subtitle>
+        <mat-card-subtitle>Start Date: {{projectDetails.Start_Date | date}}</mat-card-subtitle>
+        <mat-card-subtitle>End Date: {{projectDetails.End_Date | date}}</mat-card-subtitle>
+        <mat-card-subtitle>Project Manager: {{projectDetails.Project_Manager}}</mat-card-subtitle>
+        <mat-card-subtitle>Status: {{projectDetails.Status}}</mat-card-subtitle>
+        <mat-card-subtitle>Comment: {{projectDetails.Comment}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="button_container" fxLayoutGap="20px" fxLayoutAlign="end">
+        <button mat-button color="accent" (click)="allowEditProject()">Edit Project</button>
+        <button mat-button mat-dialog-close color="warn">Close</button>
+    </mat-card-content>
+    <form *ngIf="editProjectTouched" [formGroup]="editProjectForm" (ngSubmit)="confirmEditProject()">
+        <div fxLayout fxLayoutAlign="space-between" fxLayoutGap="10px">
+            <mat-form-field>
+                <mat-label>Project Type</mat-label>
+                <input matInput formControlName="Project_Type">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select formControlName="Status">
+                    <mat-option [value]="status" *ngFor="let status of statusArray">{{status}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Project Manager</mat-label>
+                <mat-select formControlName="Project_Manager">
+                    <mat-option [value]="manager" *ngFor="let manager of projectManagersIds">{{manager}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout fxLayoutAlign="space-between">
+            <mat-form-field>
+                <mat-label>Start Date</mat-label>
+                <input formControlName="Start_Date" matInput [matDatepicker]="startDatePicker">
+                <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>End Date</mat-label>                        
+                <input formControlName="End_Date" matInput [matDatepicker]="endDatePicker">
+                <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <mat-form-field class="project_comment">
+            <textarea formControlName="Comment" matInput></textarea>
+        </mat-form-field>
+        <button type="submit" mat-button>Update</button>
+
+    </form>
+</mat-card>

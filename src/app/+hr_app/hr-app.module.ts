@@ -4,7 +4,8 @@ import { HrAppComponent } from './hr-app.component';
 import { HrAppRouterModule } from './hr-app-router.module';
 import { EmployeeListComponent } from './components/employee-list/employee-list.component';
 import { SharedModule } from '../shared/shared.module';
-import { LeaveRequestComponent } from './components/leave-request/leave-request.component';
+import { LeaveRequestComponent } from './components/leave-request/employees-leave-request/leave-request.component';
+import { HrLeaveRequestListComponent } from './components/leave-request/hr-leave-request-list/hr-leave-request-list.component';
 
 
 
@@ -12,7 +13,8 @@ import { LeaveRequestComponent } from './components/leave-request/leave-request.
   declarations: [
     HrAppComponent,
     EmployeeListComponent,
-    LeaveRequestComponent
+    LeaveRequestComponent,
+    HrLeaveRequestListComponent
   ],
   imports: [
     CommonModule,

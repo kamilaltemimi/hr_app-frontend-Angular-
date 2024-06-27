@@ -1,0 +1,25 @@
+<mat-card class="container">
+    <mat-card-header fxLayout="column">
+        <mat-card-title>Leave Request ID: {{data.ID}}</mat-card-title>
+        <mat-card-subtitle class="full_name_container">Employee Full Name: {{employee?.Full_Name}}</mat-card-subtitle>
+        <mat-card-subtitle>Employee ID: {{employee?.ID}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content fxLayout="column">
+        <div>Absence Reason: {{data.Absence_Reason}}</div>
+        <div>Start Date: {{data.Start_Date | date}}</div>        
+        <div>End Date: {{data.End_Date | date}}</div>
+        <form [formGroup]="leaveRequestForm" (ngSubmit)="submitForm()">
+            <div class="action_container">
+                <mat-form-field>
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="Status">
+                    <mat-option [value]="status[2]">Rejected</mat-option>
+                    <mat-option [value]="status[3]">Approved</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-dialog-close type="submit" [disabled]="leaveRequestForm.invalid" class="button" mat-button>Submit</button>
+                <button mat-dialog-close color="warn" class="button" mat-button>Close</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

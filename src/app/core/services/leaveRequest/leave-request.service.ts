@@ -16,4 +16,12 @@ export class LeaveRequestService {
   addLeaveRequest(leaveRequest: LeaveRequest): Observable<LeaveRequest> {
     return this.http.post<LeaveRequest>(this.URL, leaveRequest)
   }
+
+  getLeaveRequests(): Observable<LeaveRequest[]> {
+    return this.http.get<LeaveRequest[]>(this.URL)
+  }
+
+  updateLeaveRequest(id: number, status: string): Observable<LeaveRequest> {
+    return this.http.put<LeaveRequest>(`${this.URL}/${id}`, status)
+  }
 }

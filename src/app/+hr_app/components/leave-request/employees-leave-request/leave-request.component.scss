@@ -1,0 +1,32 @@
+.form_container {
+    background-color: #fafafa;
+    border-radius: 20px;
+    border: 1px solid #000000;
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 15px 0px rgba(66, 68, 90, 1);
+}
+.form_content_container {
+    padding: 20px;
+}
+
+.form_title {
+    margin-bottom: 10px;
+    color: white;
+}
+
+.date_input {
+    width: 212px;
+}
+
+.submission_confirmation {
+    color: #008000;
+    text-align: center;
+}
+
+.employee_details_container {
+    margin-bottom: 20px;
+    padding: 8px 0 8px 0;
+    background-color: #e6e6e6;
+    border-radius: 10px;
+}

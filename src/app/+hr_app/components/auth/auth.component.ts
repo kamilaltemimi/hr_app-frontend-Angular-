@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../../core/services/auth/auth.service';
-import { User } from '../../../core/models/user';
+import { Employee } from '../../../core/models/employee';
 import { take } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -21,7 +21,7 @@ import { SharedModule } from '../../../shared/shared.module';
 export class AuthComponent {
 
   subdivisionArray = ['HR', 'IT', 'Marketing', 'Sales']
-  employeesData: User[] = []
+  employeesData: Employee[] = []
   chosenEmployeeName?: string | null = ''
 
   subdivision = ''
@@ -54,7 +54,7 @@ export class AuthComponent {
   getAllEmployees(): void {
     this.authService.getAllEmployees()
     .pipe(take(1))
-    .subscribe((data: User[]) => {
+    .subscribe((data: Employee[]) => {
       this.employeesData = data
       return data
     })
@@ -65,8 +65,8 @@ export class AuthComponent {
         this.chosenEmployeeName = null
         this.authForm.get('id')?.enable()
         this.authForm.get('id')?.patchValue(null)
-        this.authService.getEmployeeBySubdivision(subdivisionData).subscribe((data: User[]) => {
-          this.idBySubdivision = data.map((user: User) => user.ID)
+        this.authService.getEmployeesBySubdivision(subdivisionData).subscribe((data: Employee[]) => {
+          this.idBySubdivision = data.map((user: Employee) => user.ID)
           this.chosenEmployeeName = ''
         })
     })
@@ -77,8 +77,8 @@ export class AuthComponent {
       if (id !== null) {
         this.authService.getAllEmployees()
           .pipe(take(1))
-          .subscribe((data: User[]) => {
-            const employee = data.find((user: User) => user.ID === id)
+          .subscribe((data: Employee[]) => {
+            const employee = data.find((user: Employee) => user.ID === id)
             if (employee) this.chosenEmployeeName = employee.Full_Name;
           })
       } else this.chosenEmployeeName = null
@@ -86,7 +86,7 @@ export class AuthComponent {
   }
 
   submitForm(): void {
-    this.authService.getEmployeeById(this.authForm.get('id')?.value).subscribe((user: User) => {
+    this.authService.getEmployeeById(this.authForm.get('id')?.value).subscribe((user: Employee) => {
       this.authService.currentUser.next(user)
       localStorage.setItem('user_data', JSON.stringify(user))
       if (user.Position === 'HR Manager') {

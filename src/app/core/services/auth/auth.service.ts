@@ -1,29 +1,29 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../../models/user';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Employee } from '../../models/employee';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  currentUser = new BehaviorSubject<User | null>(null)
+  currentUser = new BehaviorSubject<Employee | null>(null)
 
   URL = 'http://localhost:3000/employee'
 
   constructor(private http: HttpClient) {}
 
-  getAllEmployees(): Observable<User[]> {
-    return this.http.get<User[]>(this.URL)
+  getAllEmployees(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(this.URL)
   }
 
-  getEmployeeBySubdivision(subdivision: string): Observable<User[]> {
-    return this.http.get<User[]>(`${this.URL}/subdivision/${subdivision}`)
+  getEmployeesBySubdivision(subdivision: string): Observable<Employee[]> {
+    return this.http.get<Employee[]>(`${this.URL}/subdivision/${subdivision}`)
   }
 
-  getEmployeeById(id: string): Observable<User> {
-    return this.http.get<User>(`${this.URL}/${id}`)
+  getEmployeeById(id: number): Observable<Employee> {
+    return this.http.get<Employee>(`${this.URL}/${id}`)
   }
 
 }

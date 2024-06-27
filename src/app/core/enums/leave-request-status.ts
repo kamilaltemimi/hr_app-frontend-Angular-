@@ -1,6 +1,6 @@
-export enum Status {
-    New = 'NEW',
-    Submitted = 'SUBMITTED',
-    Canceled = 'CANCELED',
-    Approved = 'APPROVED'
+export enum LeaveRequestStatus {
+    New = 'New',
+    Submitted = 'Submitted',
+    Canceled = 'Canceled',
+    Approved = 'Approved'
 }

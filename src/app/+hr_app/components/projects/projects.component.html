@@ -1,6 +1,11 @@
 <div fxFlex="100vw" fxLayout fxLayoutAlign="center">
     <div fxLayout="column" fxLayoutAlign="center center">
-        <button [disabled]="!isAddingProjectAvailable" class="button_add_project" mat-flat-button (click)="openAddProjectDialog()">Add Project</button>
+        <div fxLayout fxLayoutGap="20px" fxLayoutAlign="center center">
+            <mat-form-field>
+                <input matInput placeholder="Search..." (keyup)="filterProjects($event)">
+            </mat-form-field>
+            <button [disabled]="!isAddingProjectAvailable" class="button_add_project" mat-flat-button color="accent" (click)="openAddProjectDialog()">Add Project</button>
+        </div>
         <div class="table_container">
             <table mat-table matSort [dataSource]="dataSource">
                 <ng-container matColumnDef="ID">
@@ -34,7 +39,7 @@
                 <ng-container matColumnDef="Details">
                     <th mat-header-cell *matHeaderCellDef>Details</th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-button (click)="openProjectDetails()">Details</button>
+                        <button mat-button (click)="openProjectDetails(element)">Details</button>
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

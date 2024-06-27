@@ -7,7 +7,7 @@ export enum Subdivision {
 
 export const EmployeePositions = {
     [Subdivision.IT]: ['Frontend Developer', 'Backend Developer', 'UI/UX Designer', 'DevOps Engineer', 'Software Developer', 'QA Engineer'],
-    [Subdivision.HR]: ['HR Manager'],
-    [Subdivision.Sales]: ['Sales Manager', 'Sales Representative', 'Sales Analyst'],
+    [Subdivision.HR]: ['HR Manager', 'HR Director'],
+    [Subdivision.Sales]: ['Sales Manager', 'Sales Representative', 'Sales Analyst', 'Sales Intern'],
     [Subdivision.Marketing]: ['Marketing Specialist', 'Content Writer', 'Social Media Manager']
 }

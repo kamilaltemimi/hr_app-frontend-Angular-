@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../core/services/auth/auth.service';
-import { User } from '../../../core/models/user';
+import { AuthService } from '../../../../core/services/auth/auth.service';
+import { Employee } from '../../../../core/models/employee';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { Status } from '../../../core/enums/leave-request-status';
-import { LeaveRequestService } from '../../../core/services/leaveRequest/leave-request.service';
+import { LeaveRequestStatus } from '../../../../core/enums/leave-request-status';
+import { LeaveRequestService } from '../../../../core/services/leaveRequest/leave-request.service';
 
 @Component({
   selector: 'app-leave-request',
@@ -15,30 +15,26 @@ import { LeaveRequestService } from '../../../core/services/leaveRequest/leave-r
 export class LeaveRequestComponent implements OnInit {
 
   submissionText = ''
-  currentEmployee!: User
+  currentEmployee!: Employee
   leaveRequestForm!: FormGroup
 
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
     private leaveRequestService: LeaveRequestService
-  ) {}
+    ) {}
 
   ngOnInit(): void {
     this.currentEmployee = this.authService.currentUser.value!
     this.leaveRequestForm = this.fb.group({
-      Full_Name: [this.currentEmployee.Full_Name, [Validators.required]],
       Employee_ID: [this.currentEmployee.ID, [Validators.required]],
       Absence_Reason: ['', [Validators.required]],
-      Subdivision: [this.currentEmployee.Subdivision, [Validators.required]],
-      Position: [this.currentEmployee.Position, [Validators.required]],
       Start_Date: [Date, [Validators.required]],
       End_Date: [Date, [Validators.required]],
       Comment: ['', [Validators.required]],
-      Status: [Status.New, [Validators.required]]
+      Status: [LeaveRequestStatus.Submitted, [Validators.required]]
     })
   }
-
   submitLeaveRequestForm(): void {
     const leaveRequest = {
       Employee_ID: this.leaveRequestForm.get('Employee_ID')?.value,
@@ -48,6 +44,9 @@ export class LeaveRequestComponent implements OnInit {
       Comment: this.leaveRequestForm.get('Comment')?.value,
       Status: this.leaveRequestForm.get('Status')?.value
     }
-    this.leaveRequestService.addLeaveRequest(leaveRequest).subscribe()
+    this.leaveRequestService.addLeaveRequest(leaveRequest).subscribe(() => {
+      this.submissionText = 'You have successfuly added a leave request'
+      this.leaveRequestForm.reset()
+    })
   }
 }
