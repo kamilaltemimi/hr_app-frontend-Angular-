@@ -1,0 +1,29 @@
+<div>
+    <form class="form" fxLayout="column" [formGroup]="addProjectForm" (ngSubmit)="submitProjectForm()">
+        <div fxFlex fxLayout fxLayoutGap="10px">
+            <mat-form-field fxFlex="180px">
+                <mat-label>Project Type</mat-label>
+                <input matInput formControlName="Project_Type">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Start Date</mat-label>
+                <input fxFlex="200px" formControlName="Start_Date" matInput [matDatepicker]="startDatePicker">
+                <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>End Date</mat-label>                        
+                <input fxFlex="200px" formControlName="End_Date" matInput [matDatepicker]="endDatePicker">
+                <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <mat-form-field>
+            <mat-label>Comment</mat-label>
+            <textarea matInput formControlName="Comment"></textarea>
+        </mat-form-field>
+        <p class="added_project_text" *ngIf="addedProjectText">{{addedProjectText}}</p>
+        <button class="submit_button" [disabled]="addProjectForm.invalid" mat-flat-button>Add Project</button>
+        <button class="close_button" mat-dialog-close color="warn" mat-flat-button>Close</button>
+    </form>    
+</div>
