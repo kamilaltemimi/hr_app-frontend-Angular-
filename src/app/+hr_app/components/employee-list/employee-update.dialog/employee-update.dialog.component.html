@@ -1,6 +1,6 @@
 <div class="container">
     <mat-card class="content_container" fxFlex fxLayoutAlign="start center" fxLayout="column">
-        <form [formGroup]="editUserForm" fxLayout="column" (ngSubmit)="submitChanges()">
+        <form [formGroup]="editEmployeeForm" fxLayout="column" (ngSubmit)="submitChanges()">
             <mat-form-field>
                 <mat-label>Full Name</mat-label>
                 <input matInput formControlName="Full_Name">
@@ -37,7 +37,7 @@
                 <mat-label>OOF</mat-label>
                 <input matInput type="number" formControlName="Out_of_Office_Balance">
             </mat-form-field>
-            <button class="button_submit" [disabled]="editUserForm.invalid" mat-flat-button color="accent" type="submit">Submit changes</button>
+            <button class="button_submit" [disabled]="editEmployeeForm.invalid" mat-flat-button color="accent" type="submit">Submit changes</button>
             <button mat-dialog-close mat-flat-button color="warn">Close</button>
         </form>
     </mat-card>

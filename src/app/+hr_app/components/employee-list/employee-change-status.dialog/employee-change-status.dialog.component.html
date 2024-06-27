@@ -1,0 +1,15 @@
+<mat-card class="container">
+    <mat-card-header fxLayout="column">
+        <p *ngIf="employeeData.Status === 'Active'">You are going to deactivate:</p> 
+        <p *ngIf="employeeData.Status === 'Inactive'">You are going to activate:</p> 
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{employeeData.Full_Name}}</p> 
+        <p>ID:{{employeeData.ID}}</p>
+    </mat-card-content>
+    <div class="button_container" fxLayout fxLayoutAlign="center center" fxLayoutGap="10px">
+        <button *ngIf="employeeData.Status === 'Active'" (click)="deactivateEmployee()" color="accent" mat-flat-button>Deactivate</button>
+        <button *ngIf="employeeData.Status === 'Inactive'" (click)="activateEmployee()" color="warn" mat-flat-button>Activate</button>
+        <button mat-dialog-close color="accent" mat-flat-button>Go back</button>
+    </div>
+</mat-card>

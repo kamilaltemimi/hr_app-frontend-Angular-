@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChangeStatusEmployeeDialogComponent } from './change-status-employee.dialog.component';
+import { EmployeeChangeStatusDialogComponent } from './employee-change-status.dialog.component';
 
 describe('DeadcivateEmployeeDialogComponent', () => {
-  let component: ChangeStatusEmployeeDialogComponent;
-  let fixture: ComponentFixture<ChangeStatusEmployeeDialogComponent>;
+  let component: EmployeeChangeStatusDialogComponent;
+  let fixture: ComponentFixture<EmployeeChangeStatusDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChangeStatusEmployeeDialogComponent]
+      imports: [EmployeeChangeStatusDialogComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ChangeStatusEmployeeDialogComponent);
+    fixture = TestBed.createComponent(EmployeeChangeStatusDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

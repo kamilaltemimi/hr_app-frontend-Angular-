@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from '../../../../core/models/user';
+import { Employee } from '../../../../core/models/employee';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CommonModule } from '@angular/common';
@@ -12,29 +12,29 @@ import { AuthService } from '../../../../core/services/auth/auth.service';
   selector: 'app-update-employee.dialog',
   standalone: true,
   imports: [SharedModule, CommonModule],
-  templateUrl: './update-employee.dialog.component.html',
-  styleUrl: './update-employee.dialog.component.scss'
+  templateUrl: './employee-update.dialog.component.html',
+  styleUrl: './employee-update.dialog.component.scss'
 })
-export class UpdateEmployeeDialogComponent implements OnInit {
+export class EmployeeUpdateeDialogComponent implements OnInit {
 
-  selectedUser!: User 
-  editUserForm!: FormGroup
-  subdivisions: string[] = [] = Object.values(Subdivision)
+  selectedEmployee!: Employee 
+  editEmployeeForm!: FormGroup
+  subdivisions: string[] = Object.values(Subdivision)
   positions: string[] = []
   partnersIds: number[] = []
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public userData: User,
+    @Inject(MAT_DIALOG_DATA) public userData: Employee,
     private fb: FormBuilder,
     private authService: AuthService,
     private employeeService: EmployeeService,
-    private readonly _dialog: MatDialogRef<UpdateEmployeeDialogComponent>
+    private readonly _dialog: MatDialogRef<EmployeeUpdateeDialogComponent>
   ) {}
 
   ngOnInit(): void {
-    this.selectedUser = this.userData
+    this.selectedEmployee = this.userData
     
-    this.editUserForm = this.fb.group({
+    this.editEmployeeForm = this.fb.group({
       Full_Name: [this.userData.Full_Name, [Validators.required]],
       Subdivision: [this.userData.Subdivision, [Validators.required]],
       Position: [this.userData.Position, [Validators.required]],
@@ -44,18 +44,18 @@ export class UpdateEmployeeDialogComponent implements OnInit {
       ID: [this.userData.ID]
     })
 
-    this.authService.getEmployeeBySubdivision('HR').subscribe((hrManagers: User[]) => {
-      hrManagers.forEach((hrManager: User) => this.partnersIds?.push(hrManager.ID))
+    this.authService.getEmployeesBySubdivision('HR').subscribe((hrManagers: Employee[]) => {
+      hrManagers.forEach((hrManager: Employee) => this.partnersIds?.push(hrManager.ID))
     })
 
-    this.editUserForm.get('Subdivision')!.valueChanges.subscribe((subdivision: Subdivision) => {
-      this.editUserForm.get('Position')!.patchValue(null)
+    this.editEmployeeForm.get('Subdivision')!.valueChanges.subscribe((subdivision: Subdivision) => {
+      this.editEmployeeForm.get('Position')!.patchValue(null)
       this.positions = EmployeePositions[subdivision] || []
     })
   }
 
   submitChanges(): void {
-    const updatedUser = this.editUserForm.value
+    const updatedUser = this.editEmployeeForm.value
     this.employeeService.updateEmployee(updatedUser).subscribe()
     this._dialog.close(updatedUser)
   }

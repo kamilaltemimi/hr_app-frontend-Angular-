@@ -1,14 +1,14 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { EmployeeService } from '../../../core/services/employee/employee.service';
 import { take } from 'rxjs';
-import { User } from '../../../core/models/user';
+import { Employee } from '../../../core/models/employee';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateEmployeeDialogComponent } from './update-employee.dialog/update-employee.dialog.component';
-import { DialogRef } from '@angular/cdk/dialog';
-import { ChangeStatusEmployeeDialogComponent } from './change-status-employee.dialog/change-status-employee.dialog.component';
+import { EmployeeUpdateeDialogComponent } from './employee-update.dialog/employee-update.dialog.component';
+import { EmployeeChangeStatusDialogComponent } from './employee-change-status.dialog/employee-change-status.dialog.component';
+import { EmployeeAddDialogComponent } from './employee-add.dialog/employee-add.dialog.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -21,7 +21,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = ['id', 'full_name', 'subdivision', 'position', 'status', 'people_partner', 'out_of_office_balance', 'update', 'deactivate'];
-  dataSource = new MatTableDataSource<User>()
+  dataSource = new MatTableDataSource<Employee>()
 
   constructor(
     private employeeService: EmployeeService,
@@ -29,10 +29,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.employeeService.getAllEmployees().pipe(take(1)).subscribe((data: User[]) => {
-      this.dataSource.data = data
-      console.log(data)
-    })
+    this.employeeService.getAllEmployees().pipe(take(1)).subscribe((data: Employee[]) => this.dataSource.data = data)
   }
 
   ngAfterViewInit(): void {
@@ -45,27 +42,35 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = inputValue
   }
 
-  updateEmployee(user: User): void {
-    const dialogRef = this.dialog.open(UpdateEmployeeDialogComponent, {
+  updateEmployee(user: Employee): void {
+    const dialogRef = this.dialog.open(EmployeeUpdateeDialogComponent, {
       data: user
     })
 
-    dialogRef.afterClosed().subscribe((result: User) => {
+    dialogRef.afterClosed().subscribe((result: Employee) => {
       if (result) {
-        const userIndex = this.dataSource.data.findIndex((user: User) => user.ID === result.ID)
+        const userIndex = this.dataSource.data.findIndex((employee: Employee) => employee.ID === result.ID)
         this.dataSource.data[userIndex] = result
         this.dataSource._updateChangeSubscription()
       }
     })
   }
 
-  deactivateEmployee(user: User): void {
-    const dialogRef = this.dialog.open(ChangeStatusEmployeeDialogComponent, {
+  deactivateEmployee(user: Employee): void {
+    const dialogRef = this.dialog.open(EmployeeChangeStatusDialogComponent, {
       data: user
     })
 
-    dialogRef.afterClosed().subscribe((result: User) => {
-      this.employeeService.getAllEmployees().subscribe((data: User[]) => this.dataSource.data = data)
+    dialogRef.afterClosed().subscribe(() => {
+      this.employeeService.getAllEmployees().subscribe((data: Employee[]) => this.dataSource.data = data)
+    })
+  }
+
+  openAddEmployeeDialog(): void {
+    const dialogRef = this.dialog.open(EmployeeAddDialogComponent)
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.employeeService.getAllEmployees().subscribe((data: Employee[]) => this.dataSource.data = data)
     })
   }
 

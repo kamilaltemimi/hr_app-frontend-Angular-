@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from '../../../../core/models/user';
+import { Employee } from '../../../../core/models/employee';
 import { SharedModule } from '../../../../shared/shared.module';
 import { EmployeeService } from '../../../../core/services/employee/employee.service';
 import { CommonModule } from '@angular/common';
@@ -9,31 +9,30 @@ import { CommonModule } from '@angular/common';
   selector: 'app-deadcivate-employee.dialog',
   standalone: true,
   imports: [SharedModule, CommonModule],
-  templateUrl: './change-status-employee.dialog.component.html',
-  styleUrl: './change-status-employee.dialog.component.scss'
+  templateUrl: './employee-change-status.dialog.component.html',
+  styleUrl: './employee-change-status.dialog.component.scss'
 })
-export class ChangeStatusEmployeeDialogComponent implements OnInit {
+export class EmployeeChangeStatusDialogComponent implements OnInit {
 
-  selectedUser!: User
+  selectedEmployee!: Employee
 
   constructor(
-    @Inject (MAT_DIALOG_DATA) public userData: User,
-    private readonly _dialog: MatDialogRef<ChangeStatusEmployeeDialogComponent>,
+    @Inject (MAT_DIALOG_DATA) public employeeData: Employee,
+    private readonly _dialog: MatDialogRef<EmployeeChangeStatusDialogComponent>,
     private employeeService: EmployeeService
   ) {}
 
   ngOnInit(): void {
-    console.log(this.userData)
-    this.selectedUser = this.userData
+    this.selectedEmployee = this.employeeData
   }
 
   deactivateEmployee(): void {
-    this.employeeService.deactivateEmployee(this.selectedUser).subscribe()
+    this.employeeService.deactivateEmployee(this.selectedEmployee).subscribe()
       this._dialog.close()
     }
 
   activateEmployee(): void {
-    this.employeeService.activateEmployee(this.selectedUser).subscribe()
+    this.employeeService.activateEmployee(this.selectedEmployee).subscribe()
     this._dialog.close()
   }
 }

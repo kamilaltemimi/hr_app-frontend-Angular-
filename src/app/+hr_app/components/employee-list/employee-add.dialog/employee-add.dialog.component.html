@@ -1,0 +1,38 @@
+<div>
+    <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="addEmployeeForm" (ngSubmit)="submitAddEmployeeForm()">
+        <mat-form-field>
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="Full_Name">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Subdivision</mat-label>
+            <mat-select formControlName="Subdivision">
+                <mat-option *ngFor="let subdivision of subdivisions" [value]="subdivision">{{subdivision}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Position</mat-label>
+            <mat-select formControlName="Position">
+                <mat-option *ngFor="let position of employeePositions" [value]="position">{{position}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Status</mat-label>
+            <input readonly matInput formControlName="Status">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Partner</mat-label>
+            <mat-select formControlName="People_Partner">
+                <mat-option [value]="partner" *ngFor="let partner of partners">{{partner}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>OOF</mat-label>
+            <input readonly matInput formControlName="Out_of_Office_Balance">
+        </mat-form-field>
+        <div class="button_container" fxLayout="column" fxLayoutAlign="center center">
+            <button class="button_submit" [disabled]="addEmployeeForm.invalid" mat-flat-button type="submit">Add Employee</button>
+            <button class="button_close" mat-dialog-close mat-flat-button color="warn">Close</button>
+        </div>
+    </form>
+</div>
