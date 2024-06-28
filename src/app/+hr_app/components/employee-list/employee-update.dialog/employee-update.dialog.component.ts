@@ -6,7 +6,6 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { EmployeeService } from '../../../../core/services/employee/employee.service';
 import { Subdivision, EmployeePositions } from '../../../../core/enums/subdivisions';
-import { AuthService } from '../../../../core/services/auth/auth.service';
 import { take } from 'rxjs';
 
 @Component({
@@ -27,7 +26,6 @@ export class EmployeeUpdateeDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public userData: Employee,
     private fb: FormBuilder,
-    private authService: AuthService,
     private employeeService: EmployeeService,
     private readonly _dialog: MatDialogRef<EmployeeUpdateeDialogComponent>
   ) {}
@@ -45,7 +43,7 @@ export class EmployeeUpdateeDialogComponent implements OnInit {
       ID: [this.userData.ID]
     })
 
-    this.authService.getEmployeesBySubdivision('HR').pipe(take(1)).subscribe((hrManagers: Employee[]) => {
+    this.employeeService.getEmployeesBySubdivision('HR').pipe(take(1)).subscribe((hrManagers: Employee[]) => {
       hrManagers.forEach((hrManager: Employee) => this.partnersIds?.push(hrManager.ID))
     })
 

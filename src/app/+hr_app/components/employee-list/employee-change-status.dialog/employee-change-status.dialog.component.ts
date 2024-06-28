@@ -37,6 +37,3 @@ export class EmployeeChangeStatusDialogComponent implements OnInit {
     this._dialog.close()
   }
 }
-
-
-

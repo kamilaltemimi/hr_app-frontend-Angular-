@@ -10,6 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedModule } from '../../../shared/shared.module';
+import { EmployeeService } from '../../../core/services/employee/employee.service';
 
 @Component({
   selector: 'app-auth',
@@ -32,7 +33,8 @@ export class AuthComponent {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private employeeService: EmployeeService
   ) {}
 
   ngOnInit(){
@@ -52,7 +54,7 @@ export class AuthComponent {
   }
 
   getAllEmployees(): void {
-    this.authService.getAllEmployees()
+    this.employeeService.getAllEmployees()
     .pipe(take(1))
     .subscribe((data: Employee[]) => {
       this.employeesData = data
@@ -65,7 +67,7 @@ export class AuthComponent {
         this.chosenEmployeeName = null
         this.authForm.get('id')?.enable()
         this.authForm.get('id')?.patchValue(null)
-        this.authService.getEmployeesBySubdivision(subdivisionData).subscribe((data: Employee[]) => {
+        this.employeeService.getEmployeesBySubdivision(subdivisionData).subscribe((data: Employee[]) => {
           this.idBySubdivision = data.map((user: Employee) => user.ID)
           this.chosenEmployeeName = ''
         })
@@ -75,7 +77,7 @@ export class AuthComponent {
   enableSelectFullName(): void {
     this.authForm.get('id')?.valueChanges.subscribe((id: number) => {
       if (id !== null) {
-        this.authService.getAllEmployees()
+        this.employeeService.getAllEmployees()
           .pipe(take(1))
           .subscribe((data: Employee[]) => {
             const employee = data.find((user: Employee) => user.ID === id)
@@ -86,7 +88,7 @@ export class AuthComponent {
   }
 
   submitForm(): void {
-    this.authService.getEmployeeById(this.authForm.get('id')?.value).subscribe((user: Employee) => {
+    this.employeeService.getEmployeeById(this.authForm.get('id')?.value).subscribe((user: Employee) => {
       this.authService.currentUser.next(user)
       localStorage.setItem('user_data', JSON.stringify(user))
       if (user.Position === 'HR Manager') {
@@ -94,5 +96,4 @@ export class AuthComponent {
       } else this.router.navigate(['/projects'])
     })
   }
-
 }

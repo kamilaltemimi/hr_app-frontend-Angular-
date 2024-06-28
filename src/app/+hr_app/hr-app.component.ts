@@ -5,7 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './hr-app.component.html',
   styleUrl: './hr-app.component.scss'
 })
-export class HrAppComponent{
-
-
-}
+export class HrAppComponent{}
