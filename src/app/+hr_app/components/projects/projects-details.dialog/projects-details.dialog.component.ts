@@ -6,7 +6,7 @@ import { Project } from '../../../../core/models/project';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { EmployeeService } from '../../../../core/services/employee/employee.service';
-import { map } from 'rxjs';
+import { map, take } from 'rxjs';
 import { Employee } from '../../../../core/models/employee';
 import { ProjectStatus } from '../../../../core/enums/status';
 import { ProjectService } from '../../../../core/services/project/project.service';
@@ -34,7 +34,7 @@ export class ProjectsDetailsDialogComponent implements OnInit {
     private fb: FormBuilder,
     private employeeService: EmployeeService,
     private projectService: ProjectService,
-    public _dialog: DialogRef
+    public _dialog: DialogRef<ProjectsDetailsDialogComponent>
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +49,7 @@ export class ProjectsDetailsDialogComponent implements OnInit {
       Status: [this.projectData.Status, [Validators.required]]
     })
     this.employeeService.getAllEmployees().pipe(
+      take(1),
       map((employees: Employee[]) => {
         const filteredEmployees: Employee[] = employees.filter((employee: Employee) => employee.Position.includes('Manager') || employee.Position.includes('Director'))
         return filteredEmployees.map((employee: Employee) => employee.ID)
@@ -71,6 +72,6 @@ export class ProjectsDetailsDialogComponent implements OnInit {
       Status: this.editProjectForm.get('Status')?.value
 
     }
-    this.projectService.updateProject(this.editProjectForm.get('ID')?.value, updatedProject).subscribe(() => this._dialog.close())
+    this.projectService.updateProject(this.editProjectForm.get('ID')?.value, updatedProject).pipe(take(1)).subscribe(() => this._dialog.close())
   }
 }

@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { EmployeeService } from '../../../../core/services/employee/employee.service';
 import { Subdivision, EmployeePositions } from '../../../../core/enums/subdivisions';
 import { AuthService } from '../../../../core/services/auth/auth.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-update-employee.dialog',
@@ -44,7 +45,7 @@ export class EmployeeUpdateeDialogComponent implements OnInit {
       ID: [this.userData.ID]
     })
 
-    this.authService.getEmployeesBySubdivision('HR').subscribe((hrManagers: Employee[]) => {
+    this.authService.getEmployeesBySubdivision('HR').pipe(take(1)).subscribe((hrManagers: Employee[]) => {
       hrManagers.forEach((hrManager: Employee) => this.partnersIds?.push(hrManager.ID))
     })
 
@@ -56,7 +57,7 @@ export class EmployeeUpdateeDialogComponent implements OnInit {
 
   submitChanges(): void {
     const updatedUser = this.editEmployeeForm.value
-    this.employeeService.updateEmployee(updatedUser).subscribe()
+    this.employeeService.updateEmployee(updatedUser).pipe(take(1)).subscribe()
     this._dialog.close(updatedUser)
   }
 

@@ -47,7 +47,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
       data: user
     })
 
-    dialogRef.afterClosed().subscribe((result: Employee) => {
+    dialogRef.afterClosed().pipe(take(1)).subscribe((result: Employee) => {
       if (result) {
         const userIndex = this.dataSource.data.findIndex((employee: Employee) => employee.ID === result.ID)
         this.dataSource.data[userIndex] = result
@@ -62,7 +62,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
     })
 
     dialogRef.afterClosed().subscribe(() => {
-      this.employeeService.getAllEmployees().subscribe((data: Employee[]) => this.dataSource.data = data)
+      this.employeeService.getAllEmployees().pipe(take(1)).subscribe((data: Employee[]) => this.dataSource.data = data)
     })
   }
 
@@ -70,8 +70,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(EmployeeAddDialogComponent)
 
     dialogRef.afterClosed().subscribe(() => {
-      this.employeeService.getAllEmployees().subscribe((data: Employee[]) => this.dataSource.data = data)
+      this.employeeService.getAllEmployees().pipe(take(1)).subscribe((data: Employee[]) => this.dataSource.data = data)
     })
   }
-
 }

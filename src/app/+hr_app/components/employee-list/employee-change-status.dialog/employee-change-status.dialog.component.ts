@@ -4,6 +4,7 @@ import { Employee } from '../../../../core/models/employee';
 import { SharedModule } from '../../../../shared/shared.module';
 import { EmployeeService } from '../../../../core/services/employee/employee.service';
 import { CommonModule } from '@angular/common';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-deadcivate-employee.dialog',
@@ -27,12 +28,12 @@ export class EmployeeChangeStatusDialogComponent implements OnInit {
   }
 
   deactivateEmployee(): void {
-    this.employeeService.deactivateEmployee(this.selectedEmployee).subscribe()
+    this.employeeService.deactivateEmployee(this.selectedEmployee).pipe(take(1)).subscribe()
       this._dialog.close()
     }
 
   activateEmployee(): void {
-    this.employeeService.activateEmployee(this.selectedEmployee).subscribe()
+    this.employeeService.activateEmployee(this.selectedEmployee).pipe(take(1)).subscribe()
     this._dialog.close()
   }
 }

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { LeaveRequestStatus } from '../../../../core/enums/leave-request-status';
 import { LeaveRequestService } from '../../../../core/services/leaveRequest/leave-request.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-leave-request',
@@ -44,7 +45,7 @@ export class LeaveRequestComponent implements OnInit {
       Comment: this.leaveRequestForm.get('Comment')?.value,
       Status: this.leaveRequestForm.get('Status')?.value
     }
-    this.leaveRequestService.addLeaveRequest(leaveRequest).subscribe(() => {
+    this.leaveRequestService.addLeaveRequest(leaveRequest).pipe(take(1)).subscribe(() => {
       this.submissionText = 'You have successfuly added a leave request'
       this.leaveRequestForm.reset()
     })

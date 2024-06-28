@@ -8,6 +8,8 @@ import { Employee } from '../../../../core/models/employee';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ProjectService } from '../../../../core/services/project/project.service';
 import { DialogRef } from '@angular/cdk/dialog';
+import { Project } from '../../../../core/models/project';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-projects-add-dialog',
@@ -20,14 +22,13 @@ import { DialogRef } from '@angular/cdk/dialog';
 export class ProjectsAddDialogComponent implements OnInit {
 
   addProjectForm!: FormGroup
-  
   addedProjectText = ''
 
   constructor(
     @Inject (MAT_DIALOG_DATA) public userData: Employee,
     private fb: FormBuilder,
     private projectService: ProjectService,
-    private _dialog: DialogRef
+    private _dialog: DialogRef<Project>
   ) {}
 
   ngOnInit(): void {
@@ -50,11 +51,6 @@ export class ProjectsAddDialogComponent implements OnInit {
       Comment: this.addProjectForm.get('Comment')?.value,
       Status: this.addProjectForm.get('Status')?.value
     }
-    this.projectService.addProject(projectForm).subscribe(() => {
-      this.addProjectForm.reset()
-      this.addedProjectText = 'You have added the project'
-    })
-
-    this._dialog.close()
+    this.projectService.addProject(projectForm).pipe(take(1)).subscribe(() => this._dialog.close())
   }
 }

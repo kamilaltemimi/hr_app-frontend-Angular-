@@ -11,6 +11,7 @@ import { ProjectService } from '../../../core/services/project/project.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ProjectsDetailsDialogComponent } from './projects-details.dialog/projects-details.dialog.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-projects',
@@ -38,7 +39,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe((employeeData: Employee | null) => {
+    this.authService.currentUser.pipe(take(1)).subscribe((employeeData: Employee | null) => {
       if (employeeData?.Position.includes('Manager') || employeeData?.Position.includes('Director')) {
         this.isAddingProjectAvailable = true
         this.activeEmployee = employeeData
@@ -52,20 +53,20 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort
   }
 
-  openAddProjectDialog(): void {
-    const dialogRef = this.dialog.open(ProjectsAddDialogComponent, {
-      data: this.activeEmployee
-    })
-    dialogRef.afterClosed().subscribe(() => this.getAllProjects())
-  }
-
   getAllProjects(): void {
-    this.projectService.getProjects().subscribe((projects: Project[]) => this.dataSource.data = projects)
+    this.projectService.getProjects().pipe(take(1)).subscribe((projects: Project[]) => this.dataSource.data = projects)
   }
 
   filterProjects(inputValue: Event): void {
     const searchTerm = (inputValue.target as HTMLInputElement).value
     this.dataSource.filter = searchTerm
+  }
+
+  openAddProjectDialog(): void {
+    const dialogRef = this.dialog.open(ProjectsAddDialogComponent, {
+      data: this.activeEmployee
+    })
+    dialogRef.afterClosed().pipe(take(1)).subscribe(() => this.getAllProjects())
   }
 
   openProjectDetails(project: Project): void {
@@ -74,6 +75,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       width: '600px'
     })
 
-    dialogRef.afterClosed().subscribe(() => this.getAllProjects())
+    dialogRef.afterClosed().pipe(take(1)).subscribe(() => this.getAllProjects())
   }
 }

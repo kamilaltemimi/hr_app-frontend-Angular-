@@ -8,6 +8,7 @@ import { SharedModule } from '../../../../../shared/shared.module';
 import { LeaveRequestStatus } from '../../../../../core/enums/leave-request-status'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LeaveRequestService } from '../../../../../core/services/leaveRequest/leave-request.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-details-hr-leave-request',
@@ -36,14 +37,13 @@ export class DetailsHrLeaveRequestComponent implements OnInit {
       this.employee = userData
     })
     this.leaveRequestData = this.data
-
     this.leaveRequestForm = this.fb.group({
       Status: [this.data.Status, [Validators.required]]
     })
   }
 
   submitForm(): void {
-    this.leaveRequestService.updateLeaveRequest(this.data.ID!, this.leaveRequestForm.value).subscribe()
+    this.leaveRequestService.updateLeaveRequest(this.data.ID!, this.leaveRequestForm.value).pipe(take(1)).subscribe()
     this._dialogRef.close({requestId: this.data.ID, updatedStatus: this.leaveRequestForm.get('Status')!.value})
   }
 }

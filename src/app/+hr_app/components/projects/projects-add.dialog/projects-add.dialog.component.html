@@ -23,7 +23,7 @@
             <textarea matInput formControlName="Comment"></textarea>
         </mat-form-field>
         <p class="added_project_text" *ngIf="addedProjectText">{{addedProjectText}}</p>
-        <button class="submit_button" [disabled]="addProjectForm.invalid" mat-flat-button>Add Project</button>
+        <button class="submit_button" type="submit" [disabled]="addProjectForm.invalid" mat-flat-button>Add Project</button>
         <button class="close_button" mat-dialog-close color="warn" mat-flat-button>Close</button>
     </form>    
 </div>

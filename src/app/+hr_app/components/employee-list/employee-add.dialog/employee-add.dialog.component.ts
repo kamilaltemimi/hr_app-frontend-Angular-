@@ -56,7 +56,7 @@ export class EmployeeAddDialogComponent implements OnInit {
   }
 
   submitAddEmployeeForm(): void {
-    this.employeeService.addEmployee(this.addEmployeeForm.value).subscribe()
+    this.employeeService.addEmployee(this.addEmployeeForm.value).pipe(take(1)).subscribe()
     this._dialog.close()
   }
 }

@@ -17,9 +17,7 @@ export class HrLeaveRequestListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   leaveRequestList = new MatTableDataSource<LeaveRequest>()
-
   displayedColumns: string[] = ['ID', 'Employee_ID', 'Absence_Reason', 'Start_Date', 'End_Date', 'Status', 'Details'];
-
 
   constructor(
     private leaveRequest: LeaveRequestService,
