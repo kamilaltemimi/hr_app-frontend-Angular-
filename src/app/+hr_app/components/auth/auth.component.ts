@@ -1,27 +1,24 @@
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Employee } from '../../../core/models/employee';
 import { take } from 'rxjs';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedModule } from '../../../shared/shared.module';
 import { EmployeeService } from '../../../core/services/employee/employee.service';
+import { Subdivision } from '../../../core/enums/subdivisions'
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, SharedModule, FlexLayoutModule, FormsModule],
+  imports: [CommonModule, SharedModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
 export class AuthComponent {
 
-  subdivisionArray = ['HR', 'IT', 'Marketing', 'Sales']
+  subdivisionArray = Object.values(Subdivision)
   employeesData: Employee[] = []
   chosenEmployeeName?: string | null = ''
 
@@ -43,7 +40,7 @@ export class AuthComponent {
     this.initForm()
     this.getAllEmployees()
     this.enableSelectId()
-    this.enableSelectFullName()
+    this.enableFullName()
   }
 
   initForm(): void {
@@ -74,7 +71,7 @@ export class AuthComponent {
     })
   }
 
-  enableSelectFullName(): void {
+  enableFullName(): void {
     this.authForm.get('id')?.valueChanges.subscribe((id: number) => {
       if (id !== null) {
         this.employeeService.getAllEmployees()
@@ -91,7 +88,7 @@ export class AuthComponent {
     this.employeeService.getEmployeeById(this.authForm.get('id')?.value).subscribe((user: Employee) => {
       this.authService.currentUser.next(user)
       localStorage.setItem('user_data', JSON.stringify(user))
-      if (user.Position === 'HR Manager') {
+      if (user.Subdivision === Subdivision.HR) {
         this.router.navigate(['/employee-list'])
       } else this.router.navigate(['/projects'])
     })
